@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplicationTest
 {
@@ -20,21 +21,10 @@ namespace WebApplicationTest
 
         [WebMethod]
         public string HelloWorld()
-        {            
-            const string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True;Connect Timeout=30;TrustServerCertificate=True;";
-            using var conn = new SqlConnection(connectionString);
-            try
-            {
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT TOP (1) * FROM [demo].[dbo].[table]";
-                var result = cmd.ExecuteReader();
-                return result.ToString(); 
-            }
-            catch (Exception e)
-            {
-                throw new ApplicationException("Unable to connect to SQLServer " + e);
-            }            
+        {
+            WebApiApplication.Logger.LogError("Hello World");
+
+            return "Hello World!";
         }
     }
 }

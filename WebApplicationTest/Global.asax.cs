@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplicationTest
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        public static ILogger Logger;
         protected void Application_Start()
         {
+            var loggerFactory = new Microsoft.Extensions.Logging.LoggerFactory();
+            Logger = loggerFactory.CreateLogger<WebApiApplication>();
         }
     }
 }
