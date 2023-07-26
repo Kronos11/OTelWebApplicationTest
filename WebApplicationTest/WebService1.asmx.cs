@@ -1,10 +1,5 @@
-﻿using System.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
-using Microsoft.Extensions.Logging;
+﻿using System.Web.Services;
+using System.Diagnostics;
 
 namespace WebApplicationTest
 {
@@ -18,12 +13,14 @@ namespace WebApplicationTest
     // [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
-
+        public static ActivitySource Source = new ActivitySource("ECDev.Activity");
+       
         [WebMethod]
         public string HelloWorld()
         {
-            WebApiApplication.Logger.LogError("Hello World");
-
+            using var activity = Source.StartActivity("Hello World");
+            // do a thing
+            activity?.AddEvent(new("Did a thing"));
             return "Hello World!";
         }
     }
